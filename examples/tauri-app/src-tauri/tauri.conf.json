@@ -1,7 +1,7 @@
 {
-  "productName": "tauri-app",
+  "productName": "video-player-example",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.video-player-example.dev",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
@@ -18,7 +18,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "tauri-app",
+        "title": "video-player-example",
         "width": 800
       }
     ]
