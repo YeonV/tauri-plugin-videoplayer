@@ -1,8 +1,10 @@
 [package]
 name = "tauri-plugin-videoplayer"
 version = "0.1.0"
-authors = [ "You" ]
-description = ""
+authors = [ "YeonV" ]
+description = "Fullscreen native video player for tauri"
+repository = "https://github.com/YeonV/tauri-plugin-videoplayer"
+license = "MIT"
 edition = "2021"
 rust-version = "1.77.2"
 exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]
