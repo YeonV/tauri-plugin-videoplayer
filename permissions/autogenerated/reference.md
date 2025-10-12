@@ -5,6 +5,7 @@ Default permissions for the plugin
 #### This default permission set includes the following:
 
 - `allow-ping`
+- `allow-play-video`
 
 ## Permission Table
 
@@ -37,6 +38,32 @@ Enables the ping command without any pre-configured scope.
 <td>
 
 Denies the ping command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`videoplayer:allow-play-video`
+
+</td>
+<td>
+
+Enables the play_video command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`videoplayer:deny-play-video`
+
+</td>
+<td>
+
+Denies the play_video command without any pre-configured scope.
 
 </td>
 </tr>

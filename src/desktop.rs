@@ -19,4 +19,9 @@ impl<R: Runtime> Videoplayer<R> {
       value: payload.value,
     })
   }
+
+  pub fn play_video(&self, payload: PlayVideoRequest) -> crate::Result<()> {
+    println!("[Desktop] Playing video from: {}", payload.path);
+    Ok(())
+  }
 }

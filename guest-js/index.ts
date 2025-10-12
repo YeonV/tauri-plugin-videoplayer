@@ -7,3 +7,11 @@ export async function ping(value: string): Promise<string | null> {
     },
   }).then((r) => (r.value ? r.value : null));
 }
+
+export async function playVideo(path: string): Promise<void> {
+  await invoke('plugin:videoplayer|play_video', {
+    payload: {
+      path
+    }
+  });
+}

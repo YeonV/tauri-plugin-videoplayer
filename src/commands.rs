@@ -11,3 +11,11 @@ pub(crate) async fn ping<R: Runtime>(
 ) -> Result<PingResponse> {
     app.videoplayer().ping(payload)
 }
+
+#[command]
+pub(crate) async fn play_video<R: Runtime>(
+    app: AppHandle<R>,
+    payload: PlayVideoRequest,
+) -> Result<()> {
+    app.videoplayer().play_video(payload)
+}

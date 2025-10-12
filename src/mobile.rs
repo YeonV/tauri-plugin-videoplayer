@@ -31,4 +31,12 @@ impl<R: Runtime> Videoplayer<R> {
       .run_mobile_plugin("ping", payload)
       .map_err(Into::into)
   }
+
+  pub fn play_video(&self, payload: PlayVideoRequest) -> crate::Result<()> {
+    self
+      .0
+      // We use a camelCase name for the mobile method for convention
+      .run_mobile_plugin("playVideo", payload)
+      .map_err(Into::into)
+  }
 }
