@@ -1,0 +1,83 @@
+name: Build Android Example APK
+
+# This makes the workflow manually triggerable from the GitHub Actions tab
+on:
+  workflow_dispatch:
+
+jobs:
+  build-android-example:
+    name: Build Android Example APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Rust dependencies
+        uses: swatinem/rust-cache@v2
+
+      - name: Install Rust toolchain with Android targets
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Setup Java (for Android build)
+        uses: actions/setup-java@v4
+        with: { distribution: 'temurin', java-version: '17' }
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r26d
+          link-to-sdk: true # This links the NDK to the SDK path
+
+      - name: Install plugin's root dependencies
+        run: yarn install
+
+      - name: Build the plugin's JavaScript API
+        run: yarn build
+
+      - name: Install example app's dependencies
+        run: yarn install
+        working-directory: ./examples/tauri-app
+
+      - name: Generate Android Signing Key
+        run: |
+          keytool -genkey -v \
+            -keystore $RUNNER_TEMP/keystore.jks \
+            -alias videoplayer \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass "00000000" \
+            -keypass "00000000" \
+            -dname "CN=VideoplayerTest,O=Test,C=XX"
+      
+      - name: Build Unsigned Android APK
+        run: yarn tauri android build
+        working-directory: ./examples/tauri-app
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Sign the APK with apksigner
+        # This is your preferred two-step signing process
+        run: |
+          APKSIGNER=$(find $ANDROID_HOME/build-tools -name "apksigner" | sort -r | head -n 1)
+          echo "Using apksigner at: $APKSIGNER"
+          $APKSIGNER sign --ks $RUNNER_TEMP/keystore.jks --ks-pass pass:"00000000" \
+          examples/tauri-app/src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+
+      - name: Rename APK for upload
+        run: |
+          ARTIFACT_DIR="artifacts"
+          mkdir -p $ARTIFACT_DIR
+          mv examples/tauri-app/src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk "$ARTIFACT_DIR/videoplayer-test.apk"
+          
+      - name: Upload Test APK as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: videoplayer-test-apk
+          path: artifacts/videoplayer-test.apk
+          retention-days: 7 # Keep test builds for a week
