@@ -30,7 +30,7 @@ jobs:
         id: setup-ndk
         with:
           ndk-version: r26d
-          link-to-sdk: true # This links the NDK to the SDK path
+          link-to-sdk: true
 
       - name: Install plugin's root dependencies
         run: yarn install
@@ -52,6 +52,15 @@ jobs:
             -keypass "00000000" \
             -dname "CN=VideoplayerTest,O=Test,C=XX"
       
+      # --- RESTORED STEP ---
+      - name: Initialize Android project
+        run: yarn tauri android init
+        working-directory: ./examples/tauri-app
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+      # --- END OF RESTORED STEP ---
+
       - name: Build Unsigned Android APK
         run: yarn tauri android build
         working-directory: ./examples/tauri-app
@@ -60,7 +69,6 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: Sign the APK with apksigner
-        # This is your preferred two-step signing process
         run: |
           APKSIGNER=$(find $ANDROID_HOME/build-tools -name "apksigner" | sort -r | head -n 1)
           echo "Using apksigner at: $APKSIGNER"
@@ -80,4 +88,4 @@ jobs:
         with:
           name: videoplayer-test-apk
           path: artifacts/videoplayer-test.apk
-          retention-days: 7 # Keep test builds for a week
+          retention-days: 7
