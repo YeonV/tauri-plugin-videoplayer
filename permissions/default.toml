@@ -1,3 +1,3 @@
 [default]
 description = "Default permissions for the plugin"
-permissions = ["allow-ping", "allow-play-video"]
+permissions = ["allow-ping", "allow-play-video", "allow-force-focus"]

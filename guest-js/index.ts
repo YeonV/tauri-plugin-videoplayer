@@ -15,3 +15,11 @@ export async function playVideo(path: string): Promise<void> {
     }
   });
 }
+
+export async function forceFocus(mainActivityClassName: string): Promise<void> {
+  await invoke('plugin:videoplayer|force_focus', {
+    payload: {
+      mainActivityClassName,
+    },
+  });
+}

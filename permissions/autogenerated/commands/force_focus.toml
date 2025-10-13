@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-force-focus"
+description = "Enables the force_focus command without any pre-configured scope."
+commands.allow = ["force_focus"]
+
+[[permission]]
+identifier = "deny-force-focus"
+description = "Denies the force_focus command without any pre-configured scope."
+commands.deny = ["force_focus"]

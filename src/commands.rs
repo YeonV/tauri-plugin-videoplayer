@@ -19,3 +19,11 @@ pub(crate) async fn play_video<R: Runtime>(
 ) -> Result<()> {
     app.videoplayer().play_video(payload)
 }
+
+#[command]
+pub(crate) async fn force_focus<R: Runtime>(
+    app: AppHandle<R>,
+    payload: ForceFocusRequest, // <-- Change this
+) -> Result<()> {
+    app.videoplayer().force_focus(payload) // <-- Pass the payload
+}

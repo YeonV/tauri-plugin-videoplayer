@@ -295,6 +295,18 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "Enables the force_focus command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-force-focus",
+          "markdownDescription": "Enables the force_focus command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the force_focus command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-force-focus",
+          "markdownDescription": "Denies the force_focus command without any pre-configured scope."
+        },
+        {
           "description": "Enables the ping command without any pre-configured scope.",
           "type": "string",
           "const": "allow-ping",
@@ -319,10 +331,10 @@
           "markdownDescription": "Denies the play_video command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-ping`\n- `allow-play-video`",
+          "description": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-ping`\n- `allow-play-video`\n- `allow-force-focus`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-ping`\n- `allow-play-video`"
+          "markdownDescription": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-ping`\n- `allow-play-video`\n- `allow-force-focus`"
         }
       ]
     }

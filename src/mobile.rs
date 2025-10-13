@@ -39,4 +39,10 @@ impl<R: Runtime> Videoplayer<R> {
       .run_mobile_plugin("playVideo", payload)
       .map_err(Into::into)
   }
+
+  pub fn force_focus(&self, payload: ForceFocusRequest) -> crate::Result<()> {
+        self.0
+            .run_mobile_plugin("forceFocus", payload) // <-- Pass the payload
+            .map_err(Into::into)
+    }
 }

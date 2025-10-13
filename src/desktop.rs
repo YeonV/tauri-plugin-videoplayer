@@ -1,5 +1,5 @@
 use serde::de::DeserializeOwned;
-use tauri::{plugin::PluginApi, AppHandle, Runtime};
+use tauri::{plugin::PluginApi, AppHandle, Runtime, Manager};
 
 use crate::models::*;
 
@@ -23,5 +23,14 @@ impl<R: Runtime> Videoplayer<R> {
   pub fn play_video(&self, payload: PlayVideoRequest) -> crate::Result<()> {
     println!("[Desktop] Playing video from: {}", payload.path);
     Ok(())
+  }
+
+  // The signature changes, but the logic doesn't use the payload.
+  pub fn force_focus(&self, _payload: ForceFocusRequest) -> crate::Result<()> {
+      if let Some(window) = self.0.get_webview_window("main") {
+          window.set_focus().map_err(Into::into)
+      } else {
+          Ok(())
+      }
   }
 }

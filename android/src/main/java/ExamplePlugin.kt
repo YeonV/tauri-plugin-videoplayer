@@ -20,6 +20,11 @@ class PlayVideoArgs {
   lateinit var path: String
 }
 
+@InvokeArg
+class ForceFocusArgs {
+  lateinit var mainActivityClassName: String // <-- Matches the field in ForceFocusRequest
+}
+
 @TauriPlugin
 class ExamplePlugin(private val activity: Activity): Plugin(activity) {
   private val implementation = Example()
@@ -49,4 +54,25 @@ class ExamplePlugin(private val activity: Activity): Plugin(activity) {
     // Signal back to Tauri that the command succeeded
     invoke.resolve()
   }
+
+   @Command
+    fun forceFocus(invoke: Invoke) {
+        try {
+            // Get the arguments from the payload
+            val args = invoke.parseArgs(ForceFocusArgs::class.java)
+            
+            // Use the class name passed from the webview
+            val mainActivityClass = Class.forName(args.mainActivityClassName)
+            
+            val intent = Intent(activity, mainActivityClass).apply {
+                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            }
+            
+            activity.startActivity(intent)
+            Log.d("VideoplayerPlugin", "Forcing focus to main activity: ${args.mainActivityClassName}")
+            invoke.resolve()
+        } catch (e: Exception) {
+            invoke.reject("Failed to force focus: ${e.message}")
+        }
+    }
 }

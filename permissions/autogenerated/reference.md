@@ -6,6 +6,7 @@ Default permissions for the plugin
 
 - `allow-ping`
 - `allow-play-video`
+- `allow-force-focus`
 
 ## Permission Table
 
@@ -15,6 +16,32 @@ Default permissions for the plugin
 <th>Description</th>
 </tr>
 
+
+<tr>
+<td>
+
+`videoplayer:allow-force-focus`
+
+</td>
+<td>
+
+Enables the force_focus command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`videoplayer:deny-force-focus`
+
+</td>
+<td>
+
+Denies the force_focus command without any pre-configured scope.
+
+</td>
+</tr>
 
 <tr>
 <td>

@@ -35,7 +35,7 @@ impl<R: Runtime, T: Manager<R>> crate::VideoplayerExt<R> for T {
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
   Builder::new("videoplayer")
-    .invoke_handler(tauri::generate_handler![commands::ping, commands::play_video])
+    .invoke_handler(tauri::generate_handler![commands::ping, commands::play_video, commands::force_focus])
     .setup(|app, api| {
       #[cfg(mobile)]
       let videoplayer = mobile::init(app, api)?;
