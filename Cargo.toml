@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-videoplayer"
-version = "0.1.3"
+version = "0.1.4"
 authors = [ "YeonV" ]
 description = "Fullscreen native video player for tauri"
 repository = "https://github.com/YeonV/tauri-plugin-videoplayer"
