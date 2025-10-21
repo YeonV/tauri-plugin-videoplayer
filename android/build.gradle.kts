@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         minSdk = 21
-
+        manifestPlaceholders["usesCleartextTraffic"] = "true"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
